@@ -2,8 +2,10 @@ var StartState = {
     
     // The preload function for StartState
     preload: function() {
-        // Load images for main gameplay
+        // Load images and sound for main gameplay
         this.game.load.image('logo', 'assets/phaser.png');
+        this.game.load.image('bg', 'assets/colorful-background-14.jpg')
+        this.game.load.audio('bgsound', 'assets/mojomills_13-suspense.mp3');
     },
     
     create: function () {

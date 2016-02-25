@@ -17,9 +17,14 @@ window.onload = function() {
     
     // Make some variables
     var bouncy;
+    var bgs;
+    var ball;
+    var balls;
     
     // Add all of the states
     game.state.add('start', StartState);
+    game.state.add('lose', LoseState);
+    game.state.add('win', WinState);
     game.state.add('play', GameState);
     
     // Start the first state
