@@ -3,8 +3,9 @@ var StartState = {
     // The preload function for StartState
     preload: function() {
         // Load images and sound for main gameplay
-        this.game.load.image('logo', 'assets/phaser.png');
-        this.game.load.image('bg', 'assets/colorful-background-14.jpg')
+        this.game.load.image('bg', 'assets/colorful-background-14.jpg');
+        this.game.load.image('ball', 'assets/waterorb.png');
+        this.game.load.image('bouncy', 'assets/sunorb.png');
         this.game.load.audio('bgsound', 'assets/mojomills_13-suspense.mp3');
     },
     
@@ -17,6 +18,7 @@ var StartState = {
         
         // Add a "click to start" button message
         var clickText = this.game.add.text(100, 100, 'click to start', { fontSize: '50px', fill: '#ffffff' });
+        var clickText = this.game.add.text(100, 200, 'try to avoid the blue balls', { fontSize: '50px', fill: '#ffffff' });
     },
 
     // Typical update function

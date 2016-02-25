@@ -16,8 +16,8 @@ var GameState = {
         this.bgs.onLoop.add(GameState.playMusic, this);
         
         // Create a sprite at the center of the screen
-        this.bouncy = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'logo');
-        this.bouncy.scale.setTo(.07,.07);
+        this.bouncy = this.game.add.sprite(this.game.world.centerX, this.game.world.centerY, 'bouncy');
+        this.bouncy.scale.setTo(.15,.15);
         
         // Anchor the sprite at its center
         this.bouncy.anchor.setTo( 0.5, 0.5 );
@@ -36,10 +36,6 @@ var GameState = {
         
         // Win game if timer gets to 32 seconds
         this.game.time.events.add(Phaser.Timer.SECOND * 32, GameState.Win, this);
-        
-        // Let bouncy and balls collide, and start lose state if they touch
-        this.game.physics.arcade.collide(this.bouncy, this.balls);
-        this.game.physics.arcade.overlap(this.bouncy, this.balls, GameState.Lose, null, this);
     },
     
     update: function () {
@@ -49,6 +45,9 @@ var GameState = {
         // This function returns the rotation angle that makes it visually match its
         // new trajectory.
         this.bouncy.rotation = this.game.physics.arcade.accelerateToPointer(this.bouncy, this.game.input.activePointer, 500, 500, 500);
+        
+        // Let bouncy and balls collide, and start lose state if they touch
+        this.game.physics.arcade.overlap(this.bouncy, this.balls, GameState.Lose, null, this);
     },
     
     render: function() {
@@ -56,8 +55,8 @@ var GameState = {
     },
     
     createBall: function () {
-        this.ball = this.balls.create(this.game.world.randomX, this.game.world.randomY, 'logo');
-        this.ball.scale.setTo(.1, .1);
+        this.ball = this.balls.create(this.game.world.randomX, this.game.world.randomY, 'ball');
+        this.ball.scale.setTo(.21, .21);
         this.game.physics.enable(this.ball, Phaser.Physics.ARCADE);
         this.ball.body.collideWorldBounds = true;
         
