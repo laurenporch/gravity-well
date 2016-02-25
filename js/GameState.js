@@ -75,7 +75,6 @@ var GameState = {
     },
     
     Lose: function () {
-        this.bouncy.destroy();
         this.game.state.start('lose');
     },
 };
