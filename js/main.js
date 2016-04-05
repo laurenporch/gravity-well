@@ -16,10 +16,15 @@ window.onload = function() {
     var game = new Phaser.Game(800, 600, Phaser.AUTO, 'game');
     
     // Make some variables
-    var bouncy;
-    var bgs;
-    var ball;
-    var balls;
+    var player;
+    var bg;
+    var jump;
+    var crate;
+    var platform;
+    var platforms;
+    var ground;
+    var cursors;
+    var gravityIsNormal;
     
     // Add all of the states
     game.state.add('start', StartState);
