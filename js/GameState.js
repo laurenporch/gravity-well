@@ -54,6 +54,8 @@ var GameState = {
         //  Our two animations, walking left and right, for normal gravity
         this.player.animations.add('leftNormal', [3,4,5], 7, true);
         this.player.animations.add('rightNormal', [6,7, 8], 7, true);
+        this.player.animations.add('leftReverse', [20,19,18], 7, true);
+        this.player.animations.add('rightReverse', [15,16, 17], 7, true);
         
         // Turn on the arcade physics engine for this sprite.
         this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
@@ -88,7 +90,7 @@ var GameState = {
                 this.player.animations.play('leftNormal');
             }
             else {
-                // this.player.animations.play('leftReverse');
+                this.player.animations.play('leftReverse');
             }
         }
         else if (this.cursors.right.isDown) {
@@ -98,13 +100,18 @@ var GameState = {
                 this.player.animations.play('rightNormal');
             }
             else {
-                // this.player.animations.play('rightReverse');
+                this.player.animations.play('rightReverse');
             }
         }
         else {
             //  Stand still
             this.player.animations.stop();
-            this.player.frame = 1;
+            if (this.gravityIsNormal) {
+                this.player.frame = 1;
+            }
+            else {
+                this.player.frame = 22;
+            }
         }
 
         //  Allow the player to jump if they are touching the ground.
