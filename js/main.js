@@ -23,6 +23,7 @@ window.onload = function() {
     var platform;
     var platforms;
     var ground;
+    var ceiling;
     var cursors;
     var gravityIsNormal;
     

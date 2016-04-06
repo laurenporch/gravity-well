@@ -28,6 +28,11 @@ var GameState = {
         this.ground = this.platforms.create(0, this.game.world.height - 32, 'platform');
         this.ground.scale.setTo(2,1);
         this.ground.body.immovable = true;
+        
+        // Create the ceiling.
+        this.ceiling = this.platforms.create(0, 0, 'platform');
+        this.ceiling.scale.setTo(2,1);
+        this.ceiling.body.immovable = true;
 
         // Create ledges.
         this.platform = this.platforms.create(100, 480, 'platform');
@@ -60,7 +65,7 @@ var GameState = {
         // this.game.time.events.repeat(2000, 15, GameState.createBall, this);
         
         // Boolean for gravity
-        this.gravityIsNormal = false;
+        this.gravityIsNormal = true;
         
         //  The controls.
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -103,19 +108,18 @@ var GameState = {
         }
 
         //  Allow the player to jump if they are touching the ground.
-        if (this.cursors.up.isDown && this.player.body.touching.down) {
-            if (this.gravityIsNormal) {
-                this.player.body.velocity.y = -350;
-            }
-            else {
-                this.player.body.velocity.y = 350;
-            }
+        if (this.cursors.up.isDown && this.player.body.touching.down && this.gravityIsNormal) {
+            this.player.body.velocity.y = -350;
+            this.jump.play();
+        }
+        else if (this.cursors.down.isDown && this.player.body.touching.up && !(this.gravityIsNormal)) {
+            this.player.body.velocity.y = 350;
             this.jump.play();
         }
     },
     
     render: function() {
-        this.game.debug.text("Time until next event: " + this.game.time.events.duration.toFixed(0), 32, 32);
+        this.game.debug.text("Time until gravity flips: " + this.game.time.events.duration.toFixed(0), 32, 50);
     },
     
     playMusic: function () {
