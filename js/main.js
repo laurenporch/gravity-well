@@ -18,13 +18,16 @@ window.onload = function() {
     // Make some variables
     var player;
     var bg;
+    // Jump sound
     var jump;
+    // Crate to push around
     var crate;
     var platform;
     var platforms;
     var ground;
     var ceiling;
     var cursors;
+    // Boolean value to track gravity changes
     var gravityIsNormal;
     
     // Add all of the states

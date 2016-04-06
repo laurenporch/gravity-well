@@ -35,9 +35,27 @@ var GameState = {
         this.ceiling.body.immovable = true;
 
         // Create ledges.
-        this.platform = this.platforms.create(100, 480, 'platform');
-        this.platform.scale.setTo(.1,1);
+        this.platform = this.platforms.create(100, 450, 'platform');
+        this.platform.scale.setTo(.15,1);
         this.platform.body.immovable = true;
+        
+        this.platform = this.platforms.create(280, 250, 'platform');
+        this.platform.scale.setTo(.5,1);
+        this.platform.body.immovable = true;
+        
+        this.platform = this.platforms.create(280, 400, 'platform');
+        this.platform.scale.setTo(.5,1);
+        this.platform.body.immovable = true;
+        
+        this.platform = this.platforms.create(600, 150, 'platform');
+        this.platform.scale.setTo(.25,1);
+        this.platform.body.immovable = true;
+        
+        // Make crate
+        this.crate = this.game.add.sprite(300, 300, 'crate');
+        this.crate.scale.setTo(.8,.8);
+        this.game.physics.arcade.enable(this.crate);
+        this.crate.body.collideWorldBounds = true;
         
         // Make player
         // The player and its settings
@@ -57,13 +75,7 @@ var GameState = {
         this.player.animations.add('leftReverse', [20,19,18], 7, true);
         this.player.animations.add('rightReverse', [15,16, 17], 7, true);
         
-        // Turn on the arcade physics engine for this sprite.
-        this.game.physics.enable(this.player, Phaser.Physics.ARCADE);
-        
-        // Make it bounce off of the world bounds.
-        this.player.body.collideWorldBounds = true;
-        
-        // Create a timer
+        // Create a timer to spawn the balls
         // this.game.time.events.repeat(2000, 15, GameState.createBall, this);
         
         // Boolean for gravity
@@ -72,33 +84,38 @@ var GameState = {
         //  The controls.
         this.cursors = this.game.input.keyboard.createCursorKeys();
         
-        // Flip gravity every 10 seconds
-        this.game.time.events.loop(Phaser.Timer.SECOND * 10, GameState.flipGravity, this);
+        // Flip gravity every 5 seconds
+        this.game.time.events.loop(Phaser.Timer.SECOND * 5, GameState.flipGravity, this);
     },
     
     update: function () {
         //  Collide the player and the stars with the platforms
         this.game.physics.arcade.collide(this.player, this.platforms);
 
-        //  Reset the players velocity (movement)
-        this.player.body.velocity.x = 0;
+        //  Reset the player's velocity ONLY when touching ground or ceiling
+        // Maintain movement if jumping/falling
+        if (this.player.body.touching.down || this.player.body.touching.up) {
+            this.player.body.velocity.x = 0;
+        }
 
-        if (this.cursors.left.isDown) {
-            //  Move to the left
+        if (this.cursors.left.isDown && (this.player.body.touching.down || this.player.body.touching.up)) {
+            //  Move to the left on ground
             this.player.body.velocity.x = -150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('leftNormal');
             }
+            // Animation for walking left on ceiling
             else {
                 this.player.animations.play('leftReverse');
             }
         }
-        else if (this.cursors.right.isDown) {
-            //  Move to the right
+        else if (this.cursors.right.isDown && (this.player.body.touching.down || this.player.body.touching.up)) {
+            //  Move to the right on ground
             this.player.body.velocity.x = 150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('rightNormal');
             }
+            // Animation for walking right on ceiling
             else {
                 this.player.animations.play('rightReverse');
             }
@@ -114,11 +131,12 @@ var GameState = {
             }
         }
 
-        //  Allow the player to jump if they are touching the ground.
+        //  Allow the player to jump if they are touching the ground
         if (this.cursors.up.isDown && this.player.body.touching.down && this.gravityIsNormal) {
             this.player.body.velocity.y = -350;
             this.jump.play();
         }
+        // Allow the player to "jump" if they are touching the ceiling
         else if (this.cursors.down.isDown && this.player.body.touching.up && !(this.gravityIsNormal)) {
             this.player.body.velocity.y = 350;
             this.jump.play();
