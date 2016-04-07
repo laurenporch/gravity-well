@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>Digital Assignment 3</title>
+    <title>Gravity Well</title>
     <script src="js/phaser.js"></script>
     <script src="js/StartState.js"></script>
     <script src="js/LoseState.js"></script>
@@ -13,9 +13,11 @@
 <style>
 body
 {
-    color: #777;
+    color: black;
     font-family: "Avenir", Verdana, sans-serif;
+    background-color: slategray;
 }
+    
 #readme
 {
     margin-top: 10px;
@@ -26,59 +28,59 @@ body
 <body>
 <div id="game"></div>
 <div id="readme">
-<h2>Twitchy</h2>
+<h2>Gravity Well</h2>
 <ul>
 
 <li><strong>High Concept:</strong>
-Fast-paced keep-away!
+Navigate through puzzles made more difficult by gravity that changes!
 </li>
 
 <li><strong>Player Experience Goals:</strong>
-Anxiety/strong focus to keep the object from hitting the balls.
+Making their brain hurt by forcing them to think differently.
 </li>
 
 <li><strong>Genre:</strong>
-Twitch games.
+Puzzle platformer.
 </li>
 
 <li><strong>Game play:</strong>
-Move the mouse pointer around and the screen to keep the orange object away from the blue balls. Click to start/restart.
+The player can push objects to move them into position before the gravity changes in the room. Objects fall in the same direction as the player, and if they fall far enough then they explode. If done correctly, the player can maneuver objects to stack, block each other, or explode in order to reach the exit.
 </li>
 
 <li><strong>Prototype goal:</strong>
-Having states for starting, winning, losing, or restarting the game. Also have improved random movement since last game. The objective is a blend between Chase and Escape, which is different from both of my previous games which were Capture.
+Discover if the core mechanic is unique and challenging enough to warrant further development.
 </li>
 
 <li><strong>Features:</strong>
-Very colorful, making it difficult to see where everything is.
+Players must place objects just so in order to get them into position when the gravity changes. The gravity mechanics will make them think in unique ways.
 </li>
 
 <li><strong>Setting/Premise:</strong>
-NA
+A spaceship on a long journey through the galaxy.
 </li>
 
 <li><strong>Story:</strong>
-NA
+You are an ambassador sent to meet with the first intelligent alien life humanity has ever encountered. You were blissfully unaware of the long journey through the galaxy until your ship’s emergency system woke you from cryo-sleep. The ship’s gravity well compartment was hit by an asteroid and it’s messing with the gravity all over the ship. This is terrible! How would it look to the aliens if you arrived with a broken ship that couldn’t maintain consistent gravity? They’d think humans were entirely incompetent! There’s nothing for it: you must make your way to the gravity well and try to repair the damage with what you have on hand. You’re too far away to turn back now, and that would be too embarrassing to explain anyway. You’re no gravity mechanic, but your cousin Sam is one, so it can’t be that hard to figure out, right?
 </li>
 
 <li><strong>Target Audience:</strong>
-People who like twitch games.
+Everyone ages 8+
 </li>
 
 <li><strong>Play time:</strong>
-32 seconds
+1~2 minutes
 </li>
 
 <li><strong>Strategies:</strong>
-Keeping the mouse close to the object.
+Knowing your path before starting to move so that you can make the best use of each gravity shift.
 </li>
 
 <li><strong>Prototype Assets:</strong>
-| Colorful Background Image: https://newevolutiondesigns.com/images/freebies/colorful-background-14.jpg | Water Ball: www.amon.co | Companion Cube: http://pockaru.deviantart.com/art/Not-so-Weighted-Companion-Cube-75898059 | Astronaut: http://pics-about-space.com/astronaut-sprite-sheet?p=5 |
+| Space Background: http://opengameart.org/content/space-background-1 | Companion Cube: http://pockaru.deviantart.com/art/Not-so-Weighted-Companion-Cube-75898059 | Astronaut: http://pics-about-space.com/astronaut-sprite-sheet?p=5 | Door/Gate: http://opengameart.org/content/lpc-animated-doors |
 </li>
 
 <li><strong>Prototype Closest Other Game:</strong>
-| Used "bouncy" from original digital template. | Followed this tutorial for states: http://perplexingtech.weebly.com/game-dev-blog/using-states-in-phaserjs-javascript-game-developement |
+| That Gravity Game: http://www.mofunzone.com/games/that_gravity_game.html |
 </li>
 
 </ul>
