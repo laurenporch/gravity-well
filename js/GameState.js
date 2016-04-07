@@ -127,7 +127,8 @@ var GameState = {
         this.game.physics.arcade.collide(this.player, this.platforms);
         this.game.physics.arcade.collide(this.player, this.crate);
         this.game.physics.arcade.collide(this.crate, this.platforms);
-        this.game.physics.arcade.collide(this.player, this.door, GameState.Win, null, this.doorIsOpen);
+        // Need to change the condition for this so it only happens when this.doorIsOpen === true
+        this.game.physics.arcade.collide(this.player, this.door, GameState.Win, null, this);
         
         this.player.body.velocity.x = 0;
         
