@@ -48,14 +48,37 @@ var GameState = {
         this.platform.body.immovable = true;
         
         this.platform = this.platforms.create(600, 150, 'platform');
-        this.platform.scale.setTo(.25,1);
+        this.platform.scale.setTo(.3,1);
         this.platform.body.immovable = true;
+        
+        // Right wall
+        this.platform = this.platforms.create(773,0, 'platform');
+        this.platform.scale.setTo(.08,9.4);
+        this.platform.body.immovable = true;
+        
+        this.platform = this.platforms.create(773,348, 'platform');
+        this.platform.scale.setTo(.08,10);
+        this.platform.body.immovable = true;
+        
+        /*
+        // Platforms to "protect" door (so that player can't just jump
+        // to the side and run into it)
+        this.platform = this.platforms.create(762, 0, 'platform');
+        this.platform.scale.setTo(.015,9.4);
+        this.platform.body.immovable = true;
+        
+        this.platform = this.platforms.create(762, 348, 'platform');
+        this.platform.scale.setTo(.015,10);
+        this.platform.body.immovable = true;
+        */
         
         // Make crate
         this.crate = this.game.add.sprite(300, 300, 'crate');
         this.crate.scale.setTo(.8,.8);
         this.game.physics.arcade.enable(this.crate);
         this.crate.body.collideWorldBounds = true;
+        this.crate.body.gravity.y = 640;
+        this.crate.body.mass = .5;
         
         // Make player
         // The player and its settings
@@ -75,11 +98,22 @@ var GameState = {
         this.player.animations.add('leftReverse', [20,19,18], 7, true);
         this.player.animations.add('rightReverse', [15,16, 17], 7, true);
         
-        // Create a timer to spawn the balls
-        // this.game.time.events.repeat(2000, 15, GameState.createBall, this);
+        // Create the exit door
+        this.door = this.game.add.sprite(768, 300, 'exit');
+        this.door.animations.add('open', [3,2,1,0], 5, true);
+        this.game.physics.arcade.enable(this.door);
+        this.door.enableBody = true;
+        this.door.body.immovable = true;
         
-        // Boolean for gravity
+        // Create the button for the crate to push down
+        this.button = this.game.add.sprite(675, 182, 'platform');
+        this.button.scale.setTo(.1, .1);
+        this.button.enableBody = true;
+        this.game.physics.arcade.enable(this.button);
+        
+        // Boolean for gravity and open door
         this.gravityIsNormal = true;
+        this.doorIsOpen = false;
         
         //  The controls.
         this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -89,16 +123,28 @@ var GameState = {
     },
     
     update: function () {
-        //  Collide the player and the stars with the platforms
+        //  Collide the player, crate, button, door, and platforms accordingly
         this.game.physics.arcade.collide(this.player, this.platforms);
-
-        //  Reset the player's velocity ONLY when touching ground or ceiling
-        // Maintain movement if jumping/falling
-        if (this.player.body.touching.down || this.player.body.touching.up) {
-            this.player.body.velocity.x = 0;
+        this.game.physics.arcade.collide(this.player, this.crate);
+        this.game.physics.arcade.collide(this.crate, this.platforms);
+        this.game.physics.arcade.collide(this.player, this.door, GameState.Win, null, this.doorIsOpen);
+        
+        this.player.body.velocity.x = 0;
+        
+        while (this.crate.body.velocity.x != 0) {
+            this.crate.body.velocity.x = this.crate.body.velocity.x / 2;
         }
+        
+        // Set door frame (ba-dum-chi)
+        this.door.frame = 3;
+        
+        // Open door if it is pushing down the button, close door if not
+        this.game.physics.arcade.overlap(this.crate, this.button, GameState.openDoor, null, this);
+        
+        // If the door is open and the player touches it...
+        // this.game.physics.arcade.overlap(this.player, this.door, GameState.Win, null, this);
 
-        if (this.cursors.left.isDown && (this.player.body.touching.down || this.player.body.touching.up)) {
+        if (this.cursors.left.isDown /*&& (this.player.body.touching.down || this.player.body.touching.up)*/) {
             //  Move to the left on ground
             this.player.body.velocity.x = -150;
             if (this.gravityIsNormal) {
@@ -109,7 +155,7 @@ var GameState = {
                 this.player.animations.play('leftReverse');
             }
         }
-        else if (this.cursors.right.isDown && (this.player.body.touching.down || this.player.body.touching.up)) {
+        else if (this.cursors.right.isDown /*&& (this.player.body.touching.down || this.player.body.touching.up)*/) {
             //  Move to the right on ground
             this.player.body.velocity.x = 150;
             if (this.gravityIsNormal) {
@@ -153,10 +199,17 @@ var GameState = {
     
     flipGravity: function () {
         this.player.body.gravity.y *= -1;
+        this.crate.body.gravity.y *= -1;
         this.gravityIsNormal = (this.gravityIsNormal) ? false : true;
     },
     
+    openDoor: function () {
+        this.door.frame = 2;
+        this.doorIsOpen = true;
+    },
+    
     Win: function () {
+        this.door.animations.play('open');
         this.game.state.start('win');
     },
     

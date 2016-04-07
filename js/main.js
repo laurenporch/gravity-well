@@ -29,6 +29,12 @@ window.onload = function() {
     var cursors;
     // Boolean value to track gravity changes
     var gravityIsNormal;
+    // Boolean to track open door
+    var doorIsOpen;
+    // Exit
+    var door;
+    // Button
+    var button;
     
     // Add all of the states
     game.state.add('start', StartState);

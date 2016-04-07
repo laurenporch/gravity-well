@@ -5,6 +5,7 @@ var StartState = {
         // Load images and sound for main gameplay
         this.game.load.image('bg', 'assets/space.png');
         this.game.load.spritesheet('player', 'assets/astronaut.png', 32, 32);
+        this.game.load.spritesheet('exit', 'assets/door-sprite.png', 32, 48);
         this.game.load.image('platform', 'assets/platform.png');
         this.game.load.image('crate', 'assets/companion_cube.png');
         this.game.load.audio('jump', 'assets/jump.wav');
