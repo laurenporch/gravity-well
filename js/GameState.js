@@ -210,8 +210,10 @@ var GameState = {
     },
     
     Win: function () {
-        this.door.animations.play('open');
-        this.game.state.start('win');
+        if (this.doorIsOpen) {
+            this.door.animations.play('open');
+            this.game.state.start('win');
+        }
     },
     
     Lose: function () {
