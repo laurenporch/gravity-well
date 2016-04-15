@@ -1,4 +1,4 @@
-var GameState = {
+var LevelOneState = {
     
     create: function () {
         // Create the background and set it to the size of the game screen
@@ -9,11 +9,13 @@ var GameState = {
         this.bg.width = this.game.width;
         
         // Create the background music
-        // Only sort of loops correctly. Having issues with Chrome?
-        // (bgs.loop = true) didn't work
-        // this.bgs = this.game.add.audio('bgsound');
-        // this.bgs.play('', 0, 1, true);
-        // this.bgs.onLoop.add(GameState.playMusic, this);
+        // Only sort of loops correctly...
+        /* 
+            (bgs.loop = true) didn't work
+            this.bgs = this.game.add.audio('bgsound');
+            this.bgs.play('', 0, 1, true);
+            this.bgs.onLoop.add(LevelOneState.playMusic, this);
+        */
         
         // Add jump sound
         this.jump = this.game.add.audio('jump');
@@ -52,25 +54,13 @@ var GameState = {
         this.platform.body.immovable = true;
         
         // Right wall
-        this.platform = this.platforms.create(773,0, 'platform');
+        this.platform = this.platforms.create(768,0, 'platform');
         this.platform.scale.setTo(.08,9.4);
         this.platform.body.immovable = true;
         
-        this.platform = this.platforms.create(773,348, 'platform');
+        this.platform = this.platforms.create(768,348, 'platform');
         this.platform.scale.setTo(.08,10);
         this.platform.body.immovable = true;
-        
-        /*
-        // Platforms to "protect" door (so that player can't just jump
-        // to the side and run into it)
-        this.platform = this.platforms.create(762, 0, 'platform');
-        this.platform.scale.setTo(.015,9.4);
-        this.platform.body.immovable = true;
-        
-        this.platform = this.platforms.create(762, 348, 'platform');
-        this.platform.scale.setTo(.015,10);
-        this.platform.body.immovable = true;
-        */
         
         // Make crate
         this.crate = this.game.add.sprite(300, 300, 'crate');
@@ -81,20 +71,16 @@ var GameState = {
         this.crate.body.mass = .5;
         
         // Make player
-        // The player and its settings
         this.player = this.game.add.sprite(32, this.game.world.height - 150, 'player');
-
-        //  We need to enable physics on the player
         this.game.physics.arcade.enable(this.player);
-
-        //  Player physics properties. Give the little guy a slight bounce.
         this.player.body.bounce.y = 0.2;
         this.player.body.gravity.y = 640;
         this.player.body.collideWorldBounds = true;
 
-        //  Our two animations, walking left and right, for normal gravity
+        //  Walking left and right animations for normal gravity
         this.player.animations.add('leftNormal', [3,4,5], 7, true);
         this.player.animations.add('rightNormal', [6,7, 8], 7, true);
+        // Left and right animations for reversed gravity
         this.player.animations.add('leftReverse', [20,19,18], 7, true);
         this.player.animations.add('rightReverse', [15,16, 17], 7, true);
         
@@ -119,7 +105,7 @@ var GameState = {
         this.cursors = this.game.input.keyboard.createCursorKeys();
         
         // Flip gravity every 5 seconds
-        this.game.time.events.loop(Phaser.Timer.SECOND * 5, GameState.flipGravity, this);
+        this.game.time.events.loop(Phaser.Timer.SECOND * 5, LevelOneState.flipGravity, this);
     },
     
     update: function () {
@@ -127,25 +113,19 @@ var GameState = {
         this.game.physics.arcade.collide(this.player, this.platforms);
         this.game.physics.arcade.collide(this.player, this.crate);
         this.game.physics.arcade.collide(this.crate, this.platforms);
-        // Need to change the condition for this so it only happens when this.doorIsOpen === true
-        this.game.physics.arcade.collide(this.player, this.door, GameState.Win, null, this);
+        this.game.physics.arcade.collide(this.player, this.door, LevelOneState.Win, null, this);
         
+        // Every update should reset player velocity
         this.player.body.velocity.x = 0;
-        
-        while (this.crate.body.velocity.x != 0) {
-            this.crate.body.velocity.x = this.crate.body.velocity.x / 2;
-        }
+        this.crate.body.velocity.x = 0;
         
         // Set door frame (ba-dum-chi)
         this.door.frame = 3;
         
         // Open door if it is pushing down the button, close door if not
-        this.game.physics.arcade.overlap(this.crate, this.button, GameState.openDoor, null, this);
-        
-        // If the door is open and the player touches it...
-        // this.game.physics.arcade.overlap(this.player, this.door, GameState.Win, null, this);
+        this.game.physics.arcade.overlap(this.crate, this.button, LevelOneState.openDoor, null, this);
 
-        if (this.cursors.left.isDown /*&& (this.player.body.touching.down || this.player.body.touching.up)*/) {
+        if (this.cursors.left.isDown) {
             //  Move to the left on ground
             this.player.body.velocity.x = -150;
             if (this.gravityIsNormal) {
@@ -156,7 +136,7 @@ var GameState = {
                 this.player.animations.play('leftReverse');
             }
         }
-        else if (this.cursors.right.isDown /*&& (this.player.body.touching.down || this.player.body.touching.up)*/) {
+        else if (this.cursors.right.isDown) {
             //  Move to the right on ground
             this.player.body.velocity.x = 150;
             if (this.gravityIsNormal) {
@@ -191,12 +171,14 @@ var GameState = {
     },
     
     render: function() {
-        this.game.debug.text("Time until gravity flips: " + this.game.time.events.duration.toFixed(0), 32, 50);
+        this.game.debug.text("Next flip: " + this.game.time.events.duration.toFixed(0), 32, 50);
     },
     
+    /*
     playMusic: function () {
         // this.bgs.play('', 0, 1, true);
     },
+    */
     
     flipGravity: function () {
         this.player.body.gravity.y *= -1;
@@ -205,11 +187,12 @@ var GameState = {
     },
     
     openDoor: function () {
-        this.door.frame = 2;
+        this.door.frame = 1;
         this.doorIsOpen = true;
     },
     
     Win: function () {
+        // Only go to the next state if conditions are right for the door to be open
         if (this.doorIsOpen) {
             this.door.animations.play('open');
             this.game.state.start('win');

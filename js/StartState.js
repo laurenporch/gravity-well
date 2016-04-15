@@ -27,7 +27,7 @@ var StartState = {
     update: function () {
         // Call the game if they click the screen
         if (this.game.input.activePointer.isDown) {
-            this.game.state.start('play');
+            this.game.state.start('levelOne');
         }
     },
 };
