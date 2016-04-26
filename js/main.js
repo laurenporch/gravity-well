@@ -21,11 +21,16 @@ window.onload = function() {
     var door;   // Exit door
     var button; // Button to push to open door
     
+    //Added by Luke
+    var layer;
+    var map;
+    
     // Add all of the states
     game.state.add('start', StartState);
     game.state.add('lose', LoseState);
     game.state.add('win', WinState);
     game.state.add('levelOne', LevelOneState);
+    game.state.add('levelTwo', LevelTwoState);
     
     // Start the first state
     game.state.start('start');
