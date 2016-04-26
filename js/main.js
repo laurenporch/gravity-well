@@ -20,6 +20,8 @@ window.onload = function() {
     var doorIsOpen; // Boolean to track open door
     var door;   // Exit door
     var button; // Button to push to open door
+    var touchingCrate; // boolean to see if player is touching the crate
+    var pulling; // boolean to see if player is pulling the crate
     
     // Add all of the states
     game.state.add('start', StartState);
