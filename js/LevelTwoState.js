@@ -13,16 +13,16 @@ var LevelTwoState = {
         //adds the Map from LevelTwoMap.json
         this.map = this.game.add.tilemap('LevelTwoMap');
         this.map.addTilesetImage('platform', 'tiles');
+        this.map.addTilesetImage('door-sprite', 'doorTiles');
         this.layer = this.map.createLayer('Tile Layer 1');
+        this.layer2 = this.map.createLayer('Tile Layer 2');
+        this.layer3 = this.map.createLayer('Tile Layer 3');
         
         //Should make the world the same size as the tilemap
         this.layer.resizeWorld();
         
         //Sets the specific tile in the tileset to have collisions with
         this.map.setCollision(1);
-        
-        
-
         
 
         // Add jump sound
@@ -55,18 +55,18 @@ var LevelTwoState = {
         this.player.animations.add('leftReverse', [20,19,18], 7, true);
         this.player.animations.add('rightReverse', [15,16, 17], 7, true);
         
-        /*// Create the exit door
-        this.door = this.game.add.sprite(768, 300, 'exit');
+        // Create the exit door
+        this.door = this.game.add.sprite(1568, 495, 'exit');
         this.door.animations.add('open', [3,2,1,0], 5, true);
         this.game.physics.arcade.enable(this.door);
         this.door.enableBody = true;
-        this.door.body.immovable = true;*/
+        this.door.body.immovable = true;
         
-        /*// Create the button for the crate to push down
-        this.button = this.game.add.sprite(675, 182, 'platform');
+        // Create the button for the crate to push down
+        this.button = this.game.add.sprite(1360, 157, 'platform');
         this.button.scale.setTo(.1, .1);
         this.button.enableBody = true;
-        this.game.physics.arcade.enable(this.button);*/
+        this.game.physics.arcade.enable(this.button);
         
         // Boolean for gravity and open door
         this.gravityIsNormal = true;
@@ -84,17 +84,20 @@ var LevelTwoState = {
         this.game.physics.arcade.collide(this.player, this.crate);
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.crate, this.layer);
-        //this.game.physics.arcade.collide(this.player, this.door, LevelTwoState.Win, null, this);
+        this.game.physics.arcade.collide(this.player, this.door, LevelTwoState.Win, null, this);
         
         // Every update should reset player velocity
         this.player.body.velocity.x = 0;
         this.crate.body.velocity.x = 0;
         
+        this.game.physics.arcade.overlap(this.player,this.layer2, LevelTwoState.checkDoor, null, this);
+        
         // Set door frame (ba-dum-chi)
-        //this.door.frame = 3;
+        this.door.frame = 3;
+        this.doorIsOpen =false;
         
         // Open door if it is pushing down the button, close door if not
-        //this.game.physics.arcade.overlap(this.crate, this.button, LevelTwoState.openDoor, null, this);
+        this.game.physics.arcade.overlap(this.crate, this.button, LevelTwoState.openDoor, null, this);
         
         
         if(this.player.alive==false)
@@ -179,4 +182,5 @@ var LevelTwoState = {
     Lose: function () {
         this.game.state.start('lose');
     },
+    
 };
