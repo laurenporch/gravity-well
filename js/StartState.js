@@ -9,31 +9,44 @@ var StartState = {
         this.game.load.image('platform', 'assets/platform.png');
         this.game.load.image('crate', 'assets/companion_cube.png');
         this.game.load.audio('jump', 'assets/jump.wav');
+        this.game.load.image('arrowKeys', 'assets/arrowkeys.png');
         
         
         //Loading done by Luke for Level 2 Map
         this.game.load.tilemap('LevelTwoMap', 'assets/LevelTwoMap.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles', 'assets/platform.png');
-        
     },
     
     create: function () {
         // Starting physics system
         this.game.physics.startSystem(Phaser.Physics.ARCADE);
         
-        // Set the background color
-        this.game.stage.backgroundColor = '#000000';
+        // Set the background
+        this.bg = this.game.add.sprite(0, 0, 'bg');
+        this.bg.x = 0;
+        this.bg.y = 0;
+        this.bg.height = this.game.height;
+        this.bg.width = this.game.width;
         
         // Add a "click to start" button message
-        var clickText = this.game.add.text(100, 100, 'click to start', { fontSize: '50px', fill: '#ffffff' });
-        var clickText = this.game.add.text(100, 200, 'something strange is going on here...', { fontSize: '50px', fill: '#ffffff' });
+        var clickText = this.game.add.text(100, 100, 'Press \'s\' to start', { fontSize: '50px', fill: '#ffffff' });
+        var storyText = this.game.add.text(100, 200, 'something strange is going on here...', { fontSize: '50px', fill: '#ffffff' });
+        var controlsText = this.game.add.text(100, 300, 'Press \'c\' for controls', { fontSize: '50px', fill: '#ffffff' });
+        
+        // Add start key
+        var startKey = this.game.input.keyboard.addKey(Phaser.Keyboard.S);
+        startKey.onDown.add(StartState.startGame, this);
+        
+        // Add menu key
+        this.menuKey = this.game.input.keyboard.addKey(Phaser.Keyboard.C);
+        this.menuKey.onDown.add(StartState.goToMenu, this);
     },
-
-    // Typical update function
-    update: function () {
-        // Call the game if they click the screen
-        if (this.game.input.activePointer.isDown) {
-            this.game.state.start('levelOne');
-        }
+    
+    startGame: function() {
+        this.game.state.start('levelOne');
+    },
+    
+    goToMenu: function() {
+        this.game.state.start('mainMenu');
     },
 };

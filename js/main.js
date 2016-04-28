@@ -20,6 +20,8 @@ window.onload = function() {
     var doorIsOpen; // Boolean to track open door
     var door;   // Exit door
     var button; // Button to push to open door
+    var menuKey;    // Assigns key 'm' so that it can be used
+    var lastState;  // Holds string that indicates what the last state was
     
     //Added by Luke
     var layer;
@@ -30,6 +32,7 @@ window.onload = function() {
     game.state.add('lose', LoseState);
     game.state.add('win', WinState);
     game.state.add('levelOne', LevelOneState);
+    game.state.add('mainMenu', MainMenuState);
     game.state.add('levelTwo', LevelTwoState);
     
     // Start the first state
