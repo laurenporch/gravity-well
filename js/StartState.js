@@ -15,6 +15,9 @@ var StartState = {
         //Loading done by Luke for Level 2 Map
         this.game.load.tilemap('LevelTwoMap', 'assets/LevelTwoMap.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.image('tiles', 'assets/platform.png');
+        
+        //Loading done by Luke for Level 3 Map
+        this.game.load.tilemap('LevelThreeMap', 'assets/LevelThreeMap.json', null, Phaser.Tilemap.TILED_JSON);
     },
     
     create: function () {
