@@ -22,7 +22,7 @@ var LevelCompleteState = {
             {
                 this.game.state.start('levelTwo');
             }
-            else if (this.nextLevel == 3)
+            if (this.nextLevel == 3)
             {
                 this.game.state.start('levelThree');
             }

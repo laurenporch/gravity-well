@@ -27,7 +27,7 @@ window.onload = function() {
     var layer;
     var layer2;
     var map;
-    var nextLevel=2;
+    var nextLevel;
     
     // Add all of the states
     game.state.add('start', StartState);
