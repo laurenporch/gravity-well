@@ -2,7 +2,7 @@ var LevelTwoState = {
     
     create: function () {
         this.game.physics.startSystem(game, Phaser.Physics.ARCADE);
-        
+        //this.game.world.resize(1600,600);
         // Create the background and set it to the size of the game screen
         this.bg = this.game.add.sprite(0, 0, 'bg');
         this.bg.x = 0;
@@ -13,13 +13,11 @@ var LevelTwoState = {
         //adds the Map from LevelTwoMap.json
         this.map = this.game.add.tilemap('LevelTwoMap');
         this.map.addTilesetImage('platform', 'tiles');
-        this.map.addTilesetImage('door-sprite', 'doorTiles');
-        this.layer = this.map.createLayer('Tile Layer 1');
-        this.layer2 = this.map.createLayer('Tile Layer 2');
-        this.layer3 = this.map.createLayer('Tile Layer 3');
+        this.layer2 = this.map.createLayer('Tile Layer 1');
+
         
         //Should make the world the same size as the tilemap
-        this.layer.resizeWorld();
+        this.layer2.resizeWorld();
         
         //Sets the specific tile in the tileset to have collisions with
         this.map.setCollision(1);
@@ -30,6 +28,7 @@ var LevelTwoState = {
         
         
         // Make crate
+        //this.crate = this.game.add.sprite(1200, 400, 'crate');
         this.crate = this.game.add.sprite(1200, 400, 'crate');
         this.crate.scale.setTo(.8,.8);
         this.game.physics.arcade.enable(this.crate);
@@ -82,15 +81,15 @@ var LevelTwoState = {
     update: function () {
         //  Collide the player, crate, button, door, and platforms accordingly
         this.game.physics.arcade.collide(this.player, this.crate);
-        this.game.physics.arcade.collide(this.player, this.layer);
-        this.game.physics.arcade.collide(this.crate, this.layer);
+        this.game.physics.arcade.collide(this.player, this.layer2);
+        this.game.physics.arcade.collide(this.crate, this.layer2);
         this.game.physics.arcade.collide(this.player, this.door, LevelTwoState.Win, null, this);
         
         // Every update should reset player velocity
         this.player.body.velocity.x = 0;
         this.crate.body.velocity.x = 0;
         
-        this.game.physics.arcade.overlap(this.player,this.layer2, LevelTwoState.checkDoor, null, this);
+        //this.game.physics.arcade.overlap(this.player,this.layer2, LevelTwoState.checkDoor, null, this);
         
         // Set door frame (ba-dum-chi)
         this.door.frame = 3;
@@ -175,7 +174,8 @@ var LevelTwoState = {
         // Only go to the next state if conditions are right for the door to be open
         if (this.doorIsOpen) {
             this.door.animations.play('open');
-            this.game.state.start('levelThree');
+            this.game.state.states['levelComplete'].nextLevel = 3;
+            this.game.state.start('levelComplete');
         }
     },
     

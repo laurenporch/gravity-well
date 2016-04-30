@@ -1,5 +1,6 @@
 var LevelOneState = {
     
+    
     create: function () {
         // Create the background and set it to the size of the game screen
         this.bg = this.game.add.sprite(0, 0, 'bg');
@@ -172,6 +173,7 @@ var LevelOneState = {
     
     render: function() {
         this.game.debug.text("Next flip: " + this.game.time.events.duration.toFixed(0), 32, 50);
+
     },
     
     /*
@@ -195,7 +197,10 @@ var LevelOneState = {
         // Only go to the next state if conditions are right for the door to be open
         if (this.doorIsOpen) {
             this.door.animations.play('open');
-            this.game.state.start('levelTwo');
+            this.crate.kill();
+            this.game.world.removeAll();
+            this.game.state.states['levelComplete'].nextLevel = 2;
+            this.game.state.start('levelComplete');
         }
     },
     

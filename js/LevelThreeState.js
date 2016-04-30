@@ -14,7 +14,7 @@ var LevelThreeState = {
         this.map = this.game.add.tilemap('LevelThreeMap');
         this.map.addTilesetImage('platform', 'tiles');
 
-        this.layer = this.map.createLayer('Tile Layer 1');
+        this.layer = this.map.createLayer('Tile Layer 2');
 
         
         //Should make the world the same size as the tilemap
@@ -29,8 +29,8 @@ var LevelThreeState = {
         
         
         // Make crate
-        this.crate.kill();
         this.crate = this.game.add.sprite(32, 1000, 'crate');
+        
         this.crate.scale.setTo(.8,.8);
         this.game.physics.arcade.enable(this.crate);
         this.crate.body.collideWorldBounds = true;

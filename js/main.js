@@ -25,7 +25,9 @@ window.onload = function() {
     
     //Added by Luke
     var layer;
+    var layer2;
     var map;
+    var nextLevel=2;
     
     // Add all of the states
     game.state.add('start', StartState);
@@ -35,6 +37,7 @@ window.onload = function() {
     game.state.add('mainMenu', MainMenuState);
     game.state.add('levelTwo', LevelTwoState);
     game.state.add('levelThree', LevelThreeState);
+    game.state.add('levelComplete',LevelCompleteState);
     
     // Start the first state
     game.state.start('start');
