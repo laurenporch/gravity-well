@@ -14,7 +14,7 @@ var LevelThreeState = {
         this.map = this.game.add.tilemap('LevelThreeMap');
         this.map.addTilesetImage('platform', 'tiles');
 
-        this.layer = this.map.createLayer('Tile Layer 2');
+        this.layer = this.map.createLayer('Tile Layer 1');
 
         
         //Should make the world the same size as the tilemap
