@@ -10,6 +10,7 @@ var StartState = {
         this.game.load.image('crate', 'assets/companion_cube.png');
         this.game.load.audio('jump', 'assets/jump.wav');
         this.game.load.image('arrowKeys', 'assets/arrowkeys.png');
+        this.game.load.image('controlscreen', 'assets/controls-screen.png')
         
         
         //Loading done by Luke for Level 2 Map
