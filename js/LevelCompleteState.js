@@ -26,6 +26,10 @@ var LevelCompleteState = {
             {
                 this.game.state.start('levelThree');
             }
+            if (this.nextLevel == 4)
+            {
+                this.game.state.start('levelFour');
+            }
         }
     },
 };

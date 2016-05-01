@@ -38,6 +38,7 @@ window.onload = function() {
     game.state.add('levelTwo', LevelTwoState);
     game.state.add('levelThree', LevelThreeState);
     game.state.add('levelComplete',LevelCompleteState);
+    game.state.add('levelFour',LevelFourState);
     
     // Start the first state
     game.state.start('start');

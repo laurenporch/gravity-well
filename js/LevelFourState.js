@@ -1,17 +1,17 @@
-var LevelThreeState = {
+var LevelFourState = {
     
     create: function () {
         this.game.physics.startSystem(game, Phaser.Physics.ARCADE);
         
         // Create the background and set it to the size of the game screen
-        this.bg = this.game.add.tileSprite(0, 0, 800, 1600,'bg');
+        this.bg = this.game.add.tileSprite(0, 0, 1600, 1600,'bg');
         this.bg.x = 0;
         this.bg.y = 0;
         //this.bg.height = 1600;
         //this.bg.width = 608;
         
         //adds the Map from LevelThreeMap.json
-        this.map = this.game.add.tilemap('LevelThreeMap');
+        this.map = this.game.add.tilemap('LevelFourMap');
         this.map.addTilesetImage('platform', 'tiles');
 
         this.layer = this.map.createLayer('Tile Layer 1');
@@ -29,7 +29,7 @@ var LevelThreeState = {
         
         
         // Make crate
-        this.crate = this.game.add.sprite(32, 1000, 'crate');
+        this.crate = this.game.add.sprite(1184, 512, 'crate');
         
         this.crate.scale.setTo(.8,.8);
         this.game.physics.arcade.enable(this.crate);
@@ -56,14 +56,14 @@ var LevelThreeState = {
         this.player.animations.add('rightReverse', [15,16, 17], 7, true);
         
         // Create the exit door
-        this.door = this.game.add.sprite(768, 1520, 'exit');
+        this.door = this.game.add.sprite(1568, 48, 'exit');
         this.door.animations.add('open', [3,2,1,0], 5, true);
         this.game.physics.arcade.enable(this.door);
         this.door.enableBody = true;
         this.door.body.immovable = true;
         
         // Create the button for the crate to push down
-        this.button = this.game.add.sprite(36, 1565, 'platform');
+        this.button = this.game.add.sprite(1133, 93, 'platform');
         this.button.scale.setTo(.1, .1);
         this.button.enableBody = true;
         this.game.physics.arcade.enable(this.button);
@@ -76,7 +76,7 @@ var LevelThreeState = {
         this.cursors = this.game.input.keyboard.createCursorKeys();
         
         // Flip gravity every 5 seconds
-        this.game.time.events.loop(Phaser.Timer.SECOND * 5, LevelThreeState.flipGravity, this);
+        this.game.time.events.loop(Phaser.Timer.SECOND * 5, LevelFourState.flipGravity, this);
     },
     
     update: function () {
@@ -175,12 +175,12 @@ var LevelThreeState = {
         // Only go to the next state if conditions are right for the door to be open
         if (this.doorIsOpen) {
             this.door.animations.play('open');
-            this.game.state.states['levelComplete'].nextLevel = 4;
-            this.game.state.start('levelComplete');
+            this.game.state.start('win');
         }
     },
     
     Lose: function () {
+        this.game.state.states['lose'].lastState = 4;
         this.game.state.start('lose');
     },
     

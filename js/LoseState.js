@@ -13,7 +13,14 @@ var LoseState = {
     update: function () {
         // Call the game if they click the screen
         if (this.game.input.activePointer.isDown) {
-            this.game.state.start('levelTwo');
+            if (this.lastState == 2)
+            {
+                this.game.state.start('levelTwo');
+            }
+            if (this.lastState == 4)
+            {
+                this.game.state.start('levelFour');
+            }
         }
     },
 };

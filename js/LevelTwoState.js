@@ -180,6 +180,7 @@ var LevelTwoState = {
     },
     
     Lose: function () {
+        this.game.state.states['lose'].lastState = 2;
         this.game.state.start('lose');
     },
     
