@@ -205,6 +205,7 @@ var LevelOneState = {
     },
     
     Lose: function () {
+        this.game.state.states['lose'].lastState = 1;
         this.game.state.start('lose');
     },
 };

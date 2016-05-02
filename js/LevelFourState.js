@@ -84,7 +84,7 @@ var LevelFourState = {
         this.game.physics.arcade.collide(this.player, this.crate);
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.crate, this.layer);
-        this.game.physics.arcade.collide(this.player, this.door, LevelThreeState.Win, null, this);
+        this.game.physics.arcade.collide(this.player, this.door, LevelFourState.Win, null, this);
         
         // Every update should reset player velocity
         this.player.body.velocity.x = 0;
@@ -97,7 +97,7 @@ var LevelFourState = {
         this.doorIsOpen =false;
         
         // Open door if it is pushing down the button, close door if not
-        this.game.physics.arcade.overlap(this.crate, this.button, LevelThreeState.openDoor, null, this);
+        this.game.physics.arcade.overlap(this.crate, this.button, LevelFourState.openDoor, null, this);
         
         
         if(this.player.alive==false)
@@ -175,7 +175,9 @@ var LevelFourState = {
         // Only go to the next state if conditions are right for the door to be open
         if (this.doorIsOpen) {
             this.door.animations.play('open');
-            this.game.state.start('win');
+            this.game.state.states['levelComplete'].nextLevel = 5;
+            this.game.state.start('levelComplete');
+            
         }
     },
     
