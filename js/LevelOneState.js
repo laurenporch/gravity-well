@@ -9,6 +9,9 @@ var LevelOneState = {
         this.bg.height = this.game.height;
         this.bg.width = this.game.width;
         
+        // Pull mechanic boolean
+        this.touchingCrate = false;
+        
         // Create the background music
         // Only sort of loops correctly...
         /* 
@@ -112,12 +115,10 @@ var LevelOneState = {
     update: function () {
         //  Collide the player, crate, button, door, and platforms accordingly
         this.game.physics.arcade.collide(this.player, this.platforms);
-        this.game.physics.arcade.collide(this.player, this.crate);
         this.game.physics.arcade.collide(this.crate, this.platforms);
         this.game.physics.arcade.collide(this.player, this.door, LevelOneState.Win, null, this);
         
         // Tim's pull mechanic stuff
-        this.touchingCrate = false;
         this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
         
         //move crate with player if shift is pressed
