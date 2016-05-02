@@ -9,9 +9,9 @@ var StartState = {
         this.game.load.image('platform', 'assets/platform.png');
         this.game.load.image('crate', 'assets/companion_cube.png');
         this.game.load.audio('jump', 'assets/jump.wav');
-        this.game.load.image('arrowKeys', 'assets/arrowkeys.png');
         this.game.load.image('controlscreen', 'assets/controls-screen.png')
-        
+        this.game.load.audio('bgsound', 'assets/Quirky-Stroll.mp3');
+
         
         //Loading done by Luke for Level 2 Map
         this.game.load.tilemap('LevelTwoMap', 'assets/LevelTwoMap.json', null, Phaser.Tilemap.TILED_JSON);
@@ -34,6 +34,13 @@ var StartState = {
         this.bg.height = this.game.height;
         this.bg.width = this.game.width;
         
+        // Create the background music
+        // Only sort of loops correctly...
+        // (bgs.loop = true) didn't work
+        this.bgs = this.game.add.audio('bgsound');
+        this.bgs.play('', 0, 1, true);
+        this.bgs.onLoop.add(StartState.playMusic, this);
+        
         // Add a "click to start" button message
         var clickText = this.game.add.text(100, 100, 'Press \'s\' to start', { fontSize: '50px', fill: '#ffffff' });
         var storyText = this.game.add.text(100, 200, 'something strange is going on here...', { fontSize: '50px', fill: '#ffffff' });
@@ -54,5 +61,9 @@ var StartState = {
     
     goToMenu: function() {
         this.game.state.start('mainMenu');
+    },
+    
+    playMusic: function () {
+        this.bgs.play('', 0, 1, true);
     },
 };

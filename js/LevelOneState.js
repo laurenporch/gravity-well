@@ -11,14 +11,8 @@ var LevelOneState = {
         this.bg.height = this.game.height;
         this.bg.width = this.game.width;
         
-        // Create the background music
-        // Only sort of loops correctly...
-        /* 
-            (bgs.loop = true) didn't work
-            this.bgs = this.game.add.audio('bgsound');
-            this.bgs.play('', 0, 1, true);
-            this.bgs.onLoop.add(LevelOneState.playMusic, this);
-        */
+        // Pull mechanic boolean
+        this.touchingCrate = false;        
         
         // Add jump sound
         this.jump = this.game.add.audio('jump');
@@ -114,13 +108,36 @@ var LevelOneState = {
     update: function () {
         //  Collide the player, crate, button, door, and platforms accordingly
         this.game.physics.arcade.collide(this.player, this.platforms);
+<<<<<<< HEAD
         //this.game.physics.arcade.collide(this.player, this.crate);
         
         this.touchingCrate = false;
         this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
         
+=======
+>>>>>>> origin/gh-pages
         this.game.physics.arcade.collide(this.crate, this.platforms);
         this.game.physics.arcade.collide(this.player, this.door, LevelOneState.Win, null, this);
+        
+        // Tim's pull mechanic stuff
+        this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
+        
+        //move crate with player if shift is pressed
+        var gameobj = this;
+        this.game.input.keyboard.onDownCallback = function(e) {
+            console.log(e.keyCode);
+            if (e.keyCode == 16 && gameobj.touchingCrate == true)
+            {
+                gameobj.pulling = true;
+            }
+        };
+        this.game.input.keyboard.onUpCallback = function(e) {
+            console.log(e.keyCode);
+            if (e.keyCode == 16)
+            {
+                gameobj.pulling = false;
+            }
+        };
         
         // Every update should reset player velocity
         this.player.body.velocity.x = 0;
@@ -210,12 +227,6 @@ var LevelOneState = {
 
     },
     
-    /*
-    playMusic: function () {
-        // this.bgs.play('', 0, 1, true);
-    },
-    */
-    
     flipGravity: function () {
         this.player.body.gravity.y *= -1;
         this.crate.body.gravity.y *= -1;
@@ -243,6 +254,7 @@ var LevelOneState = {
         this.game.state.start('lose');
     },
     
+<<<<<<< HEAD
     PlayerCrateCollision: function (obj1, obj2) {
          this.touchingCrate = true;
      },
@@ -250,4 +262,14 @@ var LevelOneState = {
      ProcessCallback: function (obj1, obj2) {
          return true;
      },
+=======
+    // Pull mechanic stuff
+    PlayerCrateCollision: function (obj1, obj2) {
+        this.touchingCrate = true;
+    },
+    
+    ProcessCallback: function (obj1, obj2) {
+        return true;
+    },
+>>>>>>> origin/gh-pages
 };
