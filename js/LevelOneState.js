@@ -116,6 +116,27 @@ var LevelOneState = {
         this.game.physics.arcade.collide(this.crate, this.platforms);
         this.game.physics.arcade.collide(this.player, this.door, LevelOneState.Win, null, this);
         
+        // Tim's pull mechanic stuff
+        this.touchingCrate = false;
+        this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
+        
+        //move crate with player if shift is pressed
+        var gameobj = this
+        this.game.input.keyboard.onDownCallback = function(e) {
+            console.log(e.keyCode);
+            if (e.keyCode == 16 && gameobj.touchingCrate == true)
+            {
+                gameobj.pulling = true;
+            }
+        };
+        this.game.input.keyboard.onUpCallback = function(e) {
+            console.log(e.keyCode);
+            if (e.keyCode == 16)
+            {
+                gameobj.pulling = false;
+            }
+        };
+        
         // Every update should reset player velocity
         this.player.body.velocity.x = 0;
         this.crate.body.velocity.x = 0;
@@ -207,5 +228,14 @@ var LevelOneState = {
     Lose: function () {
         this.game.state.states['lose'].lastState = 1;
         this.game.state.start('lose');
+    },
+    
+    // Pull mechanic stuff
+    PlayerCrateCollision: function (obj1, obj2) {
+        this.touchingCrate = true;
+    },
+    
+    ProcessCallback: function (obj1, obj2) {
+        return true;
     },
 };

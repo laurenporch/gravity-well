@@ -23,6 +23,10 @@ window.onload = function() {
     var menuKey;    // Assigns key 'm' so that it can be used
     var lastState;  // Holds string that indicates what the last state was
     
+    // Tim's pull mechanic variables
+    var touchingCrate; // boolean to see if player is touching the crate
+    var pulling; // boolean to see if player is pulling the crate
+    
     //Added by Luke
     var layer;
     var layer2;
