@@ -47,5 +47,5 @@ window.onload = function() {
     game.state.add('levelFive',LevelFiveState);
     
     // Start the first state
-    game.state.start('preload');
+    game.state.start('start');
 };
