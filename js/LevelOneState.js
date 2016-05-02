@@ -119,6 +119,7 @@ var LevelOneState = {
         this.game.physics.arcade.collide(this.player, this.door, LevelOneState.Win, null, this);
         
         // Tim's pull mechanic stuff
+        this.touchingCrate = false;
         this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
         
         //move crate with player if shift is pressed
@@ -137,6 +138,8 @@ var LevelOneState = {
                 gameobj.pulling = false;
             }
         };
+        if (this.pulling)
+            this.pulling = Math.abs(this.player.body.y - this.crate.body.y) < 32;
         
         // Every update should reset player velocity
         this.player.body.velocity.x = 0;
@@ -150,7 +153,12 @@ var LevelOneState = {
 
         if (this.cursors.left.isDown) {
             //  Move to the left on ground
-            this.player.body.velocity.x = -150;
+            if (this.pulling == true) {
+                this.player.body.velocity.x = -75;
+                this.crate.body.velocity.x = -75;
+            }
+            else
+                this.player.body.velocity.x = -150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('leftNormal');
             }
@@ -161,7 +169,12 @@ var LevelOneState = {
         }
         else if (this.cursors.right.isDown) {
             //  Move to the right on ground
-            this.player.body.velocity.x = 150;
+            if (this.pulling == true) {
+                this.player.body.velocity.x = 75;
+                this.crate.body.velocity.x = 75;
+            }
+            else
+                this.player.body.velocity.x = 150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('rightNormal');
             }

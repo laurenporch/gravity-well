@@ -81,10 +81,33 @@ var LevelThreeState = {
     
     update: function () {
         //  Collide the player, crate, button, door, and platforms accordingly
-        this.game.physics.arcade.collide(this.player, this.crate);
+        //this.game.physics.arcade.collide(this.player, this.crate);
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.crate, this.layer);
         this.game.physics.arcade.collide(this.player, this.door, LevelThreeState.Win, null, this);
+        
+        // Tim's pull mechanic stuff
+        this.touchingCrate = false;
+        this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
+        
+        //move crate with player if shift is pressed
+        var gameobj = this
+        this.game.input.keyboard.onDownCallback = function(e) {
+            console.log(e.keyCode);
+            if (e.keyCode == 16 && gameobj.touchingCrate == true)
+            {
+                gameobj.pulling = true;
+            }
+        };
+        this.game.input.keyboard.onUpCallback = function(e) {
+            console.log(e.keyCode);
+            if (e.keyCode == 16)
+            {
+                gameobj.pulling = false;
+            }
+        };
+        if (this.pulling)
+            this.pulling = Math.abs(this.player.body.y - this.crate.body.y) < 32;
         
         // Every update should reset player velocity
         this.player.body.velocity.x = 0;
@@ -108,6 +131,8 @@ var LevelThreeState = {
         if (this.cursors.left.isDown) {
             //  Move to the left on ground
             this.player.body.velocity.x = -150;
+            if (this.pulling == true)
+                this.crate.body.velocity.x = -150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('leftNormal');
             }
@@ -119,6 +144,8 @@ var LevelThreeState = {
         else if (this.cursors.right.isDown) {
             //  Move to the right on ground
             this.player.body.velocity.x = 150;
+            if (this.pulling == true)
+                this.crate.body.velocity.x = 150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('rightNormal');
             }
@@ -183,6 +210,15 @@ var LevelThreeState = {
     Lose: function () {
         this.game.state.states['lose'].lastState = 3;
         this.game.state.start('lose');
+    },
+    
+    // Pull mechanic stuff
+    PlayerCrateCollision: function (obj1, obj2) {
+        this.touchingCrate = true;
+    },
+
+    ProcessCallback: function (obj1, obj2) {
+        return true;
     },
     
 };
