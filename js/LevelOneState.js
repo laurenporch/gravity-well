@@ -10,16 +10,7 @@ var LevelOneState = {
         this.bg.width = this.game.width;
         
         // Pull mechanic boolean
-        this.touchingCrate = false;
-        
-        // Create the background music
-        // Only sort of loops correctly...
-        /* 
-            (bgs.loop = true) didn't work
-            this.bgs = this.game.add.audio('bgsound');
-            this.bgs.play('', 0, 1, true);
-            this.bgs.onLoop.add(LevelOneState.playMusic, this);
-        */
+        this.touchingCrate = false;        
         
         // Add jump sound
         this.jump = this.game.add.audio('jump');
@@ -122,7 +113,7 @@ var LevelOneState = {
         this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
         
         //move crate with player if shift is pressed
-        var gameobj = this
+        var gameobj = this;
         this.game.input.keyboard.onDownCallback = function(e) {
             console.log(e.keyCode);
             if (e.keyCode == 16 && gameobj.touchingCrate == true)
@@ -197,12 +188,6 @@ var LevelOneState = {
         this.game.debug.text("Next flip: " + this.game.time.events.duration.toFixed(0), 32, 50);
 
     },
-    
-    /*
-    playMusic: function () {
-        // this.bgs.play('', 0, 1, true);
-    },
-    */
     
     flipGravity: function () {
         this.player.body.gravity.y *= -1;

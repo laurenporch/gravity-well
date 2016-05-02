@@ -22,6 +22,7 @@ window.onload = function() {
     var button; // Button to push to open door
     var menuKey;    // Assigns key 'm' so that it can be used
     var lastState;  // Holds string that indicates what the last state was
+    var bgs; // Background music
     
     // Tim's pull mechanic variables
     var touchingCrate; // boolean to see if player is touching the crate
@@ -46,5 +47,5 @@ window.onload = function() {
     game.state.add('levelFive',LevelFiveState);
     
     // Start the first state
-    game.state.start('start');
+    game.state.start('preload');
 };
