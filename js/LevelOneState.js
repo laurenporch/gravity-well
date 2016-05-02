@@ -108,14 +108,13 @@ var LevelOneState = {
     update: function () {
         //  Collide the player, crate, button, door, and platforms accordingly
         this.game.physics.arcade.collide(this.player, this.platforms);
-<<<<<<< HEAD
+
         //this.game.physics.arcade.collide(this.player, this.crate);
         
         this.touchingCrate = false;
         this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
         
-=======
->>>>>>> origin/gh-pages
+
         this.game.physics.arcade.collide(this.crate, this.platforms);
         this.game.physics.arcade.collide(this.player, this.door, LevelOneState.Win, null, this);
         
@@ -254,7 +253,6 @@ var LevelOneState = {
         this.game.state.start('lose');
     },
     
-<<<<<<< HEAD
     PlayerCrateCollision: function (obj1, obj2) {
          this.touchingCrate = true;
      },
@@ -262,7 +260,7 @@ var LevelOneState = {
      ProcessCallback: function (obj1, obj2) {
          return true;
      },
-=======
+
     // Pull mechanic stuff
     PlayerCrateCollision: function (obj1, obj2) {
         this.touchingCrate = true;
@@ -271,5 +269,5 @@ var LevelOneState = {
     ProcessCallback: function (obj1, obj2) {
         return true;
     },
->>>>>>> origin/gh-pages
+
 };
