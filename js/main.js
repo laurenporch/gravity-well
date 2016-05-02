@@ -29,6 +29,10 @@ window.onload = function() {
     var map;
     var nextLevel;
     
+    //Added by Tim
+    var touchingCrate; // boolean to see if player is touching the crate
+    var pulling; // boolean to see if player is pulling the crate
+    
     // Add all of the states
     game.state.add('start', StartState);
     game.state.add('lose', LoseState);

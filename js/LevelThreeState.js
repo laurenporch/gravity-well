@@ -1,6 +1,7 @@
 var LevelThreeState = {
     
     create: function () {
+        this.touchingCrate = false;
         this.game.physics.startSystem(game, Phaser.Physics.ARCADE);
         
         // Create the background and set it to the size of the game screen
@@ -81,7 +82,9 @@ var LevelThreeState = {
     
     update: function () {
         //  Collide the player, crate, button, door, and platforms accordingly
-        this.game.physics.arcade.collide(this.player, this.crate);
+        //this.game.physics.arcade.collide(this.player, this.crate);
+        this.touchingCrate = false;
+        this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.crate, this.layer);
         this.game.physics.arcade.collide(this.player, this.door, LevelThreeState.Win, null, this);
@@ -99,6 +102,25 @@ var LevelThreeState = {
         // Open door if it is pushing down the button, close door if not
         this.game.physics.arcade.overlap(this.crate, this.button, LevelThreeState.openDoor, null, this);
         
+        //move crate with player if shift is pressed
+         var gameobj = this
+         this.game.input.keyboard.onDownCallback = function(e) {
+             console.log(e.keyCode);
+             if (e.keyCode == 16 && gameobj.touchingCrate == true)
+             {
+                 gameobj.pulling = true;
+             }
+         };
+         this.game.input.keyboard.onUpCallback = function(e) {
+            console.log(e.keyCode);
+             if (e.keyCode == 16)
+             {
+                 gameobj.pulling = false;
+             }
+         };
+        if (this.pulling)
+            this.pulling = Math.abs(this.player.body.y - this.crate.body.y) < 32;
+        
         
         if(this.player.alive==false)
         {
@@ -108,6 +130,8 @@ var LevelThreeState = {
         if (this.cursors.left.isDown) {
             //  Move to the left on ground
             this.player.body.velocity.x = -150;
+            if (this.pulling)
+               this.crate.body.velocity.x = -150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('leftNormal');
             }
@@ -119,6 +143,8 @@ var LevelThreeState = {
         else if (this.cursors.right.isDown) {
             //  Move to the right on ground
             this.player.body.velocity.x = 150;
+            if (this.pulling)
+               this.crate.body.velocity.x = 150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('rightNormal');
             }
@@ -142,11 +168,13 @@ var LevelThreeState = {
         if (this.cursors.up.isDown && (this.player.body.onFloor() || this.player.body.touching.down) && this.gravityIsNormal) {
             this.player.body.velocity.y = -350;
             this.jump.play();
+            this.pulling = false;
         }
         // Allow the player to "jump" if they are touching the ceiling
         else if (this.cursors.down.isDown && (this.player.body.blocked.up ||this.player.body.touching.up) && !(this.gravityIsNormal)) {
             this.player.body.velocity.y = 350;
             this.jump.play();
+            this.pulling = false;
         }
     },
     
@@ -179,6 +207,14 @@ var LevelThreeState = {
             this.game.state.start('levelComplete');
         }
     },
+    
+    PlayerCrateCollision: function (obj1, obj2) {
+         this.touchingCrate = true;
+     },
+     
+     ProcessCallback: function (obj1, obj2) {
+         return true;
+     },
     
     Lose: function () {
         this.game.state.states['lose'].lastState = 3;

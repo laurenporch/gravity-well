@@ -2,6 +2,8 @@ var LevelOneState = {
     
     
     create: function () {
+        this.touchingCrate = false;
+        
         // Create the background and set it to the size of the game screen
         this.bg = this.game.add.sprite(0, 0, 'bg');
         this.bg.x = 0;
@@ -112,7 +114,11 @@ var LevelOneState = {
     update: function () {
         //  Collide the player, crate, button, door, and platforms accordingly
         this.game.physics.arcade.collide(this.player, this.platforms);
-        this.game.physics.arcade.collide(this.player, this.crate);
+        //this.game.physics.arcade.collide(this.player, this.crate);
+        
+        this.touchingCrate = false;
+        this.game.physics.arcade.collide(this.player, this.crate, this.PlayerCrateCollision, this.ProcessCollback, this);
+        
         this.game.physics.arcade.collide(this.crate, this.platforms);
         this.game.physics.arcade.collide(this.player, this.door, LevelOneState.Win, null, this);
         
@@ -122,13 +128,37 @@ var LevelOneState = {
         
         // Set door frame (ba-dum-chi)
         this.door.frame = 3;
+        this.doorIsOpen = false;
         
         // Open door if it is pushing down the button, close door if not
         this.game.physics.arcade.overlap(this.crate, this.button, LevelOneState.openDoor, null, this);
+        
+        
+        
+        //move crate with player if shift is pressed
+         var gameobj = this
+         this.game.input.keyboard.onDownCallback = function(e) {
+             console.log(e.keyCode);
+             if (e.keyCode == 16 && gameobj.touchingCrate == true)
+             {
+                 gameobj.pulling = true;
+             }
+         };
+         this.game.input.keyboard.onUpCallback = function(e) {
+            console.log(e.keyCode);
+             if (e.keyCode == 16)
+             {
+                 gameobj.pulling = false;
+             }
+         };
+        if (this.pulling)
+            this.pulling = Math.abs(this.player.body.y - this.crate.body.y) < 32;
 
         if (this.cursors.left.isDown) {
             //  Move to the left on ground
             this.player.body.velocity.x = -150;
+            if (this.pulling)
+               this.crate.body.velocity.x = -150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('leftNormal');
             }
@@ -140,6 +170,8 @@ var LevelOneState = {
         else if (this.cursors.right.isDown) {
             //  Move to the right on ground
             this.player.body.velocity.x = 150;
+            if (this.pulling)
+               this.crate.body.velocity.x = 150;
             if (this.gravityIsNormal) {
                 this.player.animations.play('rightNormal');
             }
@@ -163,11 +195,13 @@ var LevelOneState = {
         if (this.cursors.up.isDown && this.player.body.touching.down && this.gravityIsNormal) {
             this.player.body.velocity.y = -350;
             this.jump.play();
+            this.pulling = false;
         }
         // Allow the player to "jump" if they are touching the ceiling
         else if (this.cursors.down.isDown && this.player.body.touching.up  && !(this.gravityIsNormal)) {
             this.player.body.velocity.y = 350;
             this.jump.play();
+            this.pulling = false;
         }
     },
     
@@ -208,4 +242,12 @@ var LevelOneState = {
         this.game.state.states['lose'].lastState = 1;
         this.game.state.start('lose');
     },
+    
+    PlayerCrateCollision: function (obj1, obj2) {
+         this.touchingCrate = true;
+     },
+     
+     ProcessCallback: function (obj1, obj2) {
+         return true;
+     },
 };
