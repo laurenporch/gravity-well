@@ -7,7 +7,7 @@ var LevelSixState = {
         this.game.physics.startSystem(game, Phaser.Physics.ARCADE);
         
         // Create the background and set it to the size of the game screen
-        this.bg = this.game.add.tileSprite(0, 0, 3200, 800,'bg');
+        this.bg = this.game.add.tileSprite(0, 0, 1600, 1600,'bg');
         this.bg.x = 0;
         this.bg.y = 0;
         //this.bg.height = 1600;
@@ -46,7 +46,7 @@ var LevelSixState = {
         this.crate.body.mass = .5;
         
         // Make player
-        this.player = this.game.add.sprite(32, 32, 'player');
+        this.player = this.game.add.sprite(128, 64, 'player');
         this.player.anchor.setTo(.5, .5);
         this.game.physics.arcade.enable(this.player);
         this.player.body.bounce.y = 0.2;
@@ -279,7 +279,8 @@ var LevelSixState = {
         // Only go to the next state if conditions are right for the door to be open
         if (this.doorIsOpen) {
             this.door.animations.play('open');
-            this.game.state.start('win');
+            this.game.state.states['levelComplete'].nextLevel = 0;
+            this.game.state.start('levelComplete');
         }
     },
     
