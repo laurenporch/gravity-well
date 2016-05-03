@@ -13,25 +13,26 @@ var LoseState = {
     update: function () {
         // Call the game if they click the screen
         if (this.game.input.activePointer.isDown) {
-            if (this.lastState ==1)
+            switch (this.lastState)
             {
-                this.game.state.start('levelOne');
-            }    
-            if (this.lastState == 2)
-            {
-                this.game.state.start('levelTwo');
-            }
-            if (this.lastState == 3)
-            {
-                this.game.state.start('levelThree');
-            }
-            if (this.lastState == 4)
-            {
-                this.game.state.start('levelFour');
-            }
-            if (this.lastState == 5)
-            {
-                this.game.state.start('levelFive');
+                case 1:
+                    this.game.state.start('levelOne');
+                    break;
+                case 2:
+                    this.game.state.start('levelTwo');
+                    break;
+                case 3:
+                    this.game.state.start('levelThree');
+                    break;
+                case 4:
+                    this.game.state.start('levelFour');
+                    break;
+                case 5:
+                    this.game.state.start('levelFive');
+                    break;
+                case 6:
+                    this.game.state.start('levelSix');
+                    break;
             }
         }
     },

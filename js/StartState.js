@@ -27,7 +27,11 @@ var StartState = {
         //Loading done by Luke for Level 3,4,5 Map
         this.game.load.tilemap('LevelThreeMap', 'assets/LevelThreeMap.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.tilemap('LevelFourMap', 'assets/LevelFourMap.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.tilemap('LevelFiveMap', 'assets/LevelFiveMap.json', null, Phaser.Tilemap.TILED_JSON);        
+        this.game.load.tilemap('LevelFiveMap', 'assets/LevelFiveMap.json', null, Phaser.Tilemap.TILED_JSON); 
+        
+        //added by Tim
+        this.game.load.tilemap('LevelSixMap', 'assets/LevelSixMap.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.image('gravitySwitch', 'assets/switch.png');
     },
     
     create: function () {
@@ -69,7 +73,7 @@ var StartState = {
     },
     
     startGame: function() {
-        this.game.state.states['levelComplete'].nextLevel = 1;
+        this.game.state.states['levelComplete'].nextLevel = 6;
             this.game.state.start('levelComplete');
     },
     

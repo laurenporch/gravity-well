@@ -33,9 +33,10 @@ window.onload = function() {
     var map;
     var nextLevel;
     
-    //Added by Tim
-    var touchingCrate; // boolean to see if player is touching the crate
-    var pulling; // boolean to see if player is pulling the crate
+    // Tim added for sideways gravity
+    var gravitySwitch;
+    var gravitySideways;
+    var switchTouched;
     
     // Add all of the states
     game.state.add('start', StartState);
@@ -48,6 +49,7 @@ window.onload = function() {
     game.state.add('levelComplete',LevelCompleteState);
     game.state.add('levelFour',LevelFourState);
     game.state.add('levelFive',LevelFiveState);
+    game.state.add('levelSix',LevelSixState);
     
     // Start the first state
     game.state.start('start');
