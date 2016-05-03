@@ -65,17 +65,15 @@ var LevelSixState = {
         this.player.animations.add('rightReverse', [15,16, 17], 7, true);
         
         // Create the exit door
-        this.door = this.game.add.sprite(32*49, 32*42, 'exit');
-        this.door.scale.y *= 1.25;
+        this.door = this.game.add.sprite(1568, 1354, 'exit');
         this.door.animations.add('open', [3,2,1,0], 5, true);
         this.game.physics.arcade.enable(this.door);
         this.door.enableBody = true;
         this.door.body.immovable = true;
         
         // Create the button for the crate to push down
-        this.button = this.game.add.sprite(32*7, 32*15, 'platform');
-        this.button.angle = 90;
-        this.button.scale.setTo(.1, .1);
+        this.button = this.game.add.sprite(219, 480, 'platform');
+        this.button.scale.setTo(.05, 1);
         this.button.enableBody = true;
         this.game.physics.arcade.enable(this.button);
         
@@ -98,6 +96,7 @@ var LevelSixState = {
         this.game.physics.arcade.collide(this.player, this.layer);
         this.game.physics.arcade.collide(this.crate, this.layer);
         this.game.physics.arcade.collide(this.player, this.door, LevelSixState.Win, null, this);
+        this.game.physics.arcade.collide(this.crate, this.door);
         //this.switchTouched = false;
         this.game.physics.arcade.collide(this.player, this.gravitySwitch, this.SwitchGravity, this.ProcessCollback, this);
         
@@ -114,7 +113,7 @@ var LevelSixState = {
         
         // Set door frame (ba-dum-chi)
         this.door.frame = 3;
-        this.doorIsOpen =false;
+        this.doorIsOpen = false;
         
         // Open door if it is pushing down the button, close door if not
         this.game.physics.arcade.overlap(this.crate, this.button, LevelSixState.openDoor, null, this);
@@ -279,6 +278,7 @@ var LevelSixState = {
         // Only go to the next state if conditions are right for the door to be open
         if (this.doorIsOpen) {
             this.door.animations.play('open');
+            this.game.state.start('win');
             this.game.state.states['levelComplete'].nextLevel = 6;
             this.game.state.start('levelComplete');
         }
