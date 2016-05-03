@@ -74,7 +74,7 @@ var StartState = {
     },
     
     startGame: function() {
-        this.game.state.states['levelComplete'].nextLevel = 6;
+        this.game.state.states['levelComplete'].nextLevel = 1;
             this.game.state.start('levelComplete');
     },
     
