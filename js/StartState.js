@@ -17,7 +17,7 @@ var StartState = {
         this.game.load.image('level-two', 'assets/level-one-complete.png');
         this.game.load.image('level-three', 'assets/level-two-complete.png');
         this.game.load.image('level-four', 'assets/level-three-complete.png');
-        this.game.load.image('level-five', 'assets/level-four-complete.png');
+        this.game.load.image('level-five', 'assets/level-five-complete.png');
         this.game.load.image('end', 'assets/level-five-complete.png');
         this.game.load.image('die-screen', 'assets/die-screen.png');
         
