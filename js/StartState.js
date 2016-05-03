@@ -17,7 +17,8 @@ var StartState = {
         this.game.load.image('level-two', 'assets/level-one-complete.png');
         this.game.load.image('level-three', 'assets/level-two-complete.png');
         this.game.load.image('level-four', 'assets/level-three-complete.png');
-        this.game.load.image('level-five', 'assets/level-five-complete.png');
+        this.game.load.image('level-five', 'assets/level-four-complete.png');
+        this.game.load.image('level-six', 'assets/level-five-complete.png');
         this.game.load.image('end', 'assets/level-five-complete.png');
         this.game.load.image('die-screen', 'assets/die-screen.png');
         
@@ -30,6 +31,8 @@ var StartState = {
         this.game.load.tilemap('LevelFourMap', 'assets/LevelFourMap.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.tilemap('LevelFiveMap', 'assets/LevelFiveMap.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.tilemap('LevelSixMap', 'assets/LevelSixMap.json', null, Phaser.Tilemap.TILED_JSON);
+        
+        this.game.load.image('gravitySwitch', 'assets/switch.png');
     },
     
     create: function () {
@@ -71,7 +74,7 @@ var StartState = {
     },
     
     startGame: function() {
-        this.game.state.states['levelComplete'].nextLevel = 1;
+        this.game.state.states['levelComplete'].nextLevel = 6;
             this.game.state.start('levelComplete');
     },
     
