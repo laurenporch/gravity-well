@@ -28,7 +28,8 @@ var StartState = {
         //Loading done by Luke for Level 3,4,5 Map
         this.game.load.tilemap('LevelThreeMap', 'assets/LevelThreeMap.json', null, Phaser.Tilemap.TILED_JSON);
         this.game.load.tilemap('LevelFourMap', 'assets/LevelFourMap.json', null, Phaser.Tilemap.TILED_JSON);
-        this.game.load.tilemap('LevelFiveMap', 'assets/LevelFiveMap.json', null, Phaser.Tilemap.TILED_JSON);        
+        this.game.load.tilemap('LevelFiveMap', 'assets/LevelFiveMap.json', null, Phaser.Tilemap.TILED_JSON);
+        this.game.load.tilemap('LevelSixMap', 'assets/LevelSixMap.json', null, Phaser.Tilemap.TILED_JSON);
     },
     
     create: function () {
