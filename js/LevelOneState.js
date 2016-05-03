@@ -108,6 +108,7 @@ var LevelOneState = {
     update: function () {
         //  Collide the player, crate, button, door, and platforms accordingly
         this.game.physics.arcade.collide(this.player, this.platforms);
+        this.game.physics.arcade.collide(this.crate, this.door);
 
         //this.game.physics.arcade.collide(this.player, this.crate);
         

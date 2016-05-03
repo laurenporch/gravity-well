@@ -87,6 +87,7 @@ var LevelTwoState = {
         this.game.physics.arcade.collide(this.player, this.layer2);
         this.game.physics.arcade.collide(this.crate, this.layer2);
         this.game.physics.arcade.collide(this.player, this.door, LevelTwoState.Win, null, this);
+        this.game.physics.arcade.collide(this.crate, this.door);
         
         // Every update should reset player velocity
         this.player.body.velocity.x = 0;
