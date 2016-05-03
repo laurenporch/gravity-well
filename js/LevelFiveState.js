@@ -205,7 +205,7 @@ var LevelFiveState = {
         if (this.doorIsOpen) {
             this.door.animations.play('open');
             this.game.state.start('win');
-            this.game.state.states['levelComplete'].nextLevel = 6;
+            this.game.state.states['levelComplete'].nextLevel = 0;
             this.game.state.start('levelComplete');
         }
     },
@@ -219,7 +219,7 @@ var LevelFiveState = {
      },
     
     Lose: function () {
-        this.game.state.states['lose'].lastState = 5;
+        this.game.state.states['lose'].lastState = 6;
         this.game.state.start('lose');
     },
     

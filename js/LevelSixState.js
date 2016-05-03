@@ -279,7 +279,7 @@ var LevelSixState = {
         // Only go to the next state if conditions are right for the door to be open
         if (this.doorIsOpen) {
             this.door.animations.play('open');
-            this.game.state.states['levelComplete'].nextLevel = 0;
+            this.game.state.states['levelComplete'].nextLevel = 6;
             this.game.state.start('levelComplete');
         }
     },
@@ -314,7 +314,7 @@ var LevelSixState = {
     },
     
     Lose: function () {
-        this.game.state.states['lose'].lastState = 6;
+        this.game.state.states['lose'].lastState = 5;
         this.game.state.start('lose');
     },
     

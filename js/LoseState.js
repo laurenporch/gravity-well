@@ -31,6 +31,10 @@ var LoseState = {
             }
             if (this.lastState == 5)
             {
+                this.game.state.start('levelSix');
+            }
+            if (this.lastState == 6)
+            {
                 this.game.state.start('levelFive');
             }
         }
