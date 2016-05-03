@@ -1,35 +1,54 @@
 var LevelCompleteState = {
     
     create: function () {
-        // Create the background and set it to the size of the game screen
-        this.bg = this.game.add.sprite(0, 0, 'bg');
-        this.bg.x = 0;
-        this.bg.y = 0;
-        this.bg.height = this.game.height;
-        this.bg.width = this.game.width;
         
-        // Add text
-        
-        
+        // Story elements between levels        
+        if (this.nextLevel == 1) {
+            // Create the background and set it to the size of the game screen
+            this.bg = this.game.add.sprite(0, 0, 'level-one');
+            this.bg.x = 0;
+            this.bg.y = 0;
+            this.bg.height = this.game.height;
+            this.bg.width = this.game.width;
+        }
         if (this.nextLevel == 2)
         {
-            var complete = this.game.add.text(100, 100, 'Level one complete!', { fontSize: '50px', fill: '#ffffff' });
-        var restart = this.game.add.text(100, 200, 'Click to continue', { fontSize: '50px', fill: '#ffffff' });
+            this.bg = this.game.add.sprite(0, 0, 'level-two');
+            this.bg.x = 0;
+            this.bg.y = 0;
+            this.bg.height = this.game.height;
+            this.bg.width = this.game.width;
         }
         if (this.nextLevel == 3)
         {
-            var complete = this.game.add.text(100, 100, 'Level two complete!', { fontSize: '50px', fill: '#ffffff' });
-        var restart = this.game.add.text(100, 200, 'Click to continue', { fontSize: '50px', fill: '#ffffff' });
+            this.bg = this.game.add.sprite(0, 0, 'level-three');
+            this.bg.x = 0;
+            this.bg.y = 0;
+            this.bg.height = this.game.height;
+            this.bg.width = this.game.width;
         }
         if (this.nextLevel == 4)
         {
-            var complete = this.game.add.text(100, 100, 'Level three complete!', { fontSize: '50px', fill: '#ffffff' });
-        var restart = this.game.add.text(100, 200, 'Click to continue', { fontSize: '50px', fill: '#ffffff' });
+            this.bg = this.game.add.sprite(0, 0, 'level-four');
+            this.bg.x = 0;
+            this.bg.y = 0;
+            this.bg.height = this.game.height;
+            this.bg.width = this.game.width;
         }
         if (this.nextLevel == 5)
         {
-            var complete = this.game.add.text(100, 100, 'Level four complete!', { fontSize: '50px', fill: '#ffffff' });
-        var restart = this.game.add.text(100, 200, 'Click to continue', { fontSize: '50px', fill: '#ffffff' });
+            this.bg = this.game.add.sprite(0, 0, 'level-five');
+            this.bg.x = 0;
+            this.bg.y = 0;
+            this.bg.height = this.game.height;
+            this.bg.width = this.game.width;
+        }
+        if (this.nextLevel == 0) {
+            this.bg = this.game.add.sprite(0, 0, 'end');
+            this.bg.x = 0;
+            this.bg.y = 0;
+            this.bg.height = this.game.height;
+            this.bg.width = this.game.width;
         }
     },
     
@@ -37,6 +56,9 @@ var LevelCompleteState = {
     update: function () {
         // Call the game if they click the screen
         if (this.game.input.activePointer.isDown) {
+            if (this.nextLevel == 1) {
+                this.game.state.start('levelOne');
+            }
             if (this.nextLevel == 2)
             {
                 this.game.state.start('levelTwo');
@@ -52,6 +74,9 @@ var LevelCompleteState = {
             if (this.nextLevel == 5)
             {
                 this.game.state.start('levelFive');
+            }
+            if (this.nextLevel == 0) {
+                this.game.state.start('start');
             }
                 
         }

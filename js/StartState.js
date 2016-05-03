@@ -13,7 +13,12 @@ var StartState = {
         this.game.load.image('controlscreen', 'assets/controls-screen.png')
         this.game.load.audio('bgsound', 'assets/Quirky-Stroll.mp3');
         this.game.load.image('spaceship', 'assets/spaceship.png');
-
+        this.game.load.image('level-one', 'assets/start-level.png');
+        this.game.load.image('level-two', 'assets/level-one-complete.png');
+        this.game.load.image('level-three', 'assets/level-two-complete.png');
+        this.game.load.image('level-four', 'assets/level-three-complete.png');
+        this.game.load.image('level-five', 'assets/level-four-complete.png');
+        this.game.load.image('end', 'assets/level-five-complete.png');
         
         //Loading done by Luke for Level 2 Map
         this.game.load.tilemap('LevelTwoMap', 'assets/LevelTwoMap.json', null, Phaser.Tilemap.TILED_JSON);
@@ -64,7 +69,8 @@ var StartState = {
     },
     
     startGame: function() {
-        this.game.state.start('levelOne');
+        this.game.state.states['levelComplete'].nextLevel = 1;
+            this.game.state.start('levelComplete');
     },
     
     goToMenu: function() {
