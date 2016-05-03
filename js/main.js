@@ -9,7 +9,6 @@ window.onload = function() {
     var player; // Player
     var bg; // Background image
     var jump;   // Jump sound
-    // Crate to push around
     var crate;  // Companion cube
     var platform;   // A single platform
     var platforms;  // GROUP of platforms
