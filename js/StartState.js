@@ -19,6 +19,7 @@ var StartState = {
         this.game.load.image('level-four', 'assets/level-three-complete.png');
         this.game.load.image('level-five', 'assets/level-four-complete.png');
         this.game.load.image('end', 'assets/level-five-complete.png');
+        this.game.load.image('die-screen', 'assets/die-screen.png');
         
         //Loading done by Luke for Level 2 Map
         this.game.load.tilemap('LevelTwoMap', 'assets/LevelTwoMap.json', null, Phaser.Tilemap.TILED_JSON);

@@ -1,12 +1,12 @@
 var LoseState = {
     
     create: function () {
-        // Set background
-        this.game.stage.backgroundColor = '#000000';
-        
-        // Add text
-        var youLost = this.game.add.text(100, 100, 'You lost!', { fontSize: '50px', fill: '#ffffff' });
-        var restart = this.game.add.text(100, 200, 'click to restart', { fontSize: '50px', fill: '#ffffff' });
+        // Create the background and set it to the size of the game screen
+            this.bg = this.game.add.sprite(0, 0, 'die-screen');
+            this.bg.x = 0;
+            this.bg.y = 0;
+            this.bg.height = this.game.height;
+            this.bg.width = this.game.width;
     },
     
     // Typical update function
