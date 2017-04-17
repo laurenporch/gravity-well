@@ -56,7 +56,8 @@ var StartState = {
         // Only sort of loops correctly...
         // (bgs.loop = true) didn't work
         this.bgs = this.game.add.audio('bgsound');
-        this.bgs.play('', 0, 1, true);
+        //this.bgs.play('', 0, 1, true);
+        this.bgs.play();
         this.bgs.onLoop.add(StartState.playMusic, this);
         
         // Add start key
